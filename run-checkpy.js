@@ -14,6 +14,8 @@ define([
 ], function ($, Jupyter, dialog) {
     "use strict";
 
+    var version_str = "run-checkpy v0.0";
+
     var add_button = function () {
         var maintoolbar = $("#maintoolbar-container");
         var btn_group = $("<div />").attr("class", "btn-group")
@@ -45,7 +47,7 @@ define([
 
     var load_extension = function () {
         add_button();
-        console.log('run-checkpy v0.00 nbextension loaded.');
+        console.log(version_str + ' nbextension loaded.');
     };
 
     function run_checkpy(callback, process_output) {
@@ -72,8 +74,6 @@ define([
             input : function () {}
         });
     }
-
-
 
     function create_pop_up(data) {
          var popup = dialog.modal({
