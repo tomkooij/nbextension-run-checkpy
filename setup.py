@@ -15,11 +15,11 @@ setup(
     description='An extension of the Jupyter Notebook that runs checkPy.',
     author='Tom Kooij',
     author_email='tom.kooij@gmail.com',
-	license='BSD',
-	classifiers=[
+    license='BSD',
+    classifiers=[
         'Intended Audience :: Education',
-	    'Topic :: Education :: Testing',
-	    'License :: OSI Approved :: BSD License',
+        'Topic :: Education :: Testing',
+        'License :: OSI Approved :: BSD License',
         'Programming Language :: Python'],
     url='https://github.com/tomkooij/nbextension-run-checkpy',
     cmdclass= cmdclass('run-checkpy', 'run-checkpy/run-checkpy.js'),
