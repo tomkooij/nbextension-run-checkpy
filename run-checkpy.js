@@ -26,11 +26,18 @@ define([
             p.then(function () {
                 btn.text('Running checkPy');
                 btn.attr('disabled', 'disabled')
-                run_checkpy(function() {
-                  // promise: this will be run when script has run
-                  btn.text('checkPy');
-                  btn.removeAttr('disabled');
-              });
+                run_checkpy(
+                  function callback() {
+                    // promise: this will be run when script has run
+                    btn.text('checkPy');
+                    btn.removeAttr('disabled');
+                  },
+                  function process_output(data) {
+                    // TODO: do something with the stderr stream
+                    if (data.content.name === 'stdout') {
+                      create_pop_up(data.content.text);
+                    }
+                });
             });
         });
 
@@ -41,16 +48,16 @@ define([
         console.log('run-checkpy v0.00 nbextension loaded.');
     };
 
-    function run_checkpy(callback) {
+    function run_checkpy(callback, process_output) {
         var name = Jupyter.notebook.notebook_name;
-        run_script('!checkpy ' + name, callback);
+        run_script('!checkpy ' + name, callback, process_output);
     }
 
     /**
      * run a script using the jupyter kernel
      * output is handled by process_output()
      */
-    function run_script(script, callback) {
+    function run_script(script, callback, process_output) {
       console.log('[Notebook] executing: ' + script);
       var kernel = Jupyter.notebook.kernel;
         kernel.execute(script, {
@@ -66,14 +73,7 @@ define([
         });
     }
 
-    /* handle output of run_script() */
-    function process_output(data) {
-      // TODO: do something with the stderr stream
-      console.log(data);
-      if (data.content.name === 'stdout') {
-          create_pop_up(data.content.text);
-        }
-    }
+
 
     function create_pop_up(data) {
          var popup = dialog.modal({
