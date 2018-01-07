@@ -22,6 +22,7 @@ setup(
         'License :: OSI Approved :: BSD License',
         'Programming Language :: Python'],
     url='https://github.com/tomkooij/nbextension-run-checkpy',
-    cmdclass= cmdclass('run-checkpy', 'run-checkpy/run-checkpy.js'),
+    package=['run-checkpy'],
+    cmdclass=cmdclass('run-checkpy', 'run-checkpy/run-checkpy'),
     install_requires=['jupyter-pip'],
 )
