@@ -14,7 +14,7 @@ define([
 ], function ($, Jupyter, dialog) {
     "use strict";
 
-    var version_str = "run-checkpy v0.1";
+    var version_str = "run-checkpy v0.2";
 
     var add_button = function () {
         var maintoolbar = $("#maintoolbar-container");
