@@ -23,6 +23,8 @@ define([
         btn_group.append(btn)
         maintoolbar.append(btn_group);
 
+        var stdout_buffer = [];
+
         btn.click(function (e) {
             var p = Jupyter.notebook.save_notebook();
             p.then(function () {
@@ -31,17 +33,19 @@ define([
                 run_checkpy(
                   function callback() {
                     // promise: this will be run when script has run
+                    create_pop_up(stdout_buffer);
                     btn.text('checkPy');
                     btn.removeAttr('disabled');
                   },
                   function process_output(data) {
-                    // TODO: do something with the stderr stream
+                    // this function will be called multiple times
                     if (data.content.name === 'stdout') {
-                      var lines = data.content.text.split("\n");
-                      var colored_lines = lines.map(color_line);
-                      create_pop_up(colored_lines);
+                        var lines = data.content.text.split("\n");
+                        var colored_lines = lines.map(color_line);
+                        // stdout_buffer.extend(colored_lines);
+                        Array.prototype.push.apply(stdout_buffer, colored_lines);
                     }
-                });
+                  });
             });
         });
 
