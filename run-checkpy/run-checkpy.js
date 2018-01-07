@@ -37,17 +37,14 @@ define([
                   function process_output(data) {
                     // TODO: do something with the stderr stream
                     if (data.content.name === 'stdout') {
-                      create_pop_up(data.content.text);
+                      var lines = data.content.text.split("\n");
+                      var colored_lines = lines.map(color_line);
+                      create_pop_up(colored_lines);
                     }
                 });
             });
         });
 
-    };
-
-    var load_extension = function () {
-        add_button();
-        console.log(version_str + ' nbextension loaded.');
     };
 
     function run_checkpy(callback, process_output) {
@@ -75,6 +72,30 @@ define([
         });
     }
 
+    /**
+     * add color to text using span:
+     *  <span style="color:red"> </span>
+     */
+    function add_color_css(s, color) {
+      return '<span style="color:'+color+'">'+s+'</span>';
+    }
+
+    /**
+     * color line according to smileys. Wrap it in paragraph <p>
+     */
+    function color_line(s) {
+
+      if (s.includes(':)')) {
+          s = add_color_css(s, 'green');
+      } else if (s.includes(':(')) {
+          s = add_color_css(s, 'red');
+      } else if (s.includes(':S')) {
+          s = add_color_css(s, 'yellow');
+      }
+
+      return '<p>'+s+'</p>';
+    }
+
     function create_pop_up(data) {
          var popup = dialog.modal({
              title: 'checkPy:',
@@ -84,6 +105,11 @@ define([
              }
          }).css('white-space', 'pre-line');  // crlf -> newline
      }
+
+    function load_extension() {
+         add_button();
+         console.log(version_str + ' nbextension loaded.');
+    };
 
     return {
         'load_ipython_extension': load_extension
