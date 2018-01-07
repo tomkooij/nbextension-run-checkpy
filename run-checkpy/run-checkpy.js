@@ -82,8 +82,14 @@ define([
 
     /**
      * color line according to smileys. Wrap it in paragraph <p>
+     *
+     * Remove ansi escape sequences. ansi esc seq not present in stdout on
+     * Windows, cannot use them for colors.
      */
-    function color_line(s) {
+    function color_line(line) {
+
+      // remove ANSI color escape sequences
+      var s = line.replace(/\u001b\[.*?m/g, '');
 
       if (s.includes(':)')) {
           s = add_color_css(s, 'green');
