@@ -7,7 +7,7 @@ except:
     pip.main(['install', 'jupyter-pip'])
     cmdclass = importlib.import_module('jupyterpip').cmdclass
 
-VERSION = '0.2'
+VERSION = '0.2.1'
 
 setup(
     name='nbextension-run-checkpy',
