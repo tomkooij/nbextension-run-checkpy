@@ -23,6 +23,7 @@ setup(
         'Programming Language :: Python'],
     url='https://github.com/tomkooij/nbextension-run-checkpy',
     packages=['run-checkpy'],
+    package_data=[('run-checkpy', ['*.js'])],
     cmdclass=cmdclass('run-checkpy', 'run-checkpy/run-checkpy'),
     install_requires=['jupyter-pip'],
 )
