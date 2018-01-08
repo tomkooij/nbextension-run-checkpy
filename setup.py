@@ -7,7 +7,7 @@ except:
     pip.main(['install', 'jupyter-pip'])
     cmdclass = importlib.import_module('jupyterpip').cmdclass
 
-VERSION = '0.2.1'
+VERSION = '0.2.2'
 
 setup(
     name='nbextension-run-checkpy',
@@ -23,7 +23,7 @@ setup(
         'Programming Language :: Python'],
     url='https://github.com/tomkooij/nbextension-run-checkpy',
     packages=['run-checkpy'],
-    package_data=[('run-checkpy', ['*.js'])],
+    package_data={'run-checkpy': ['*.js']},
     cmdclass=cmdclass('run-checkpy', 'run-checkpy/run-checkpy'),
     install_requires=['jupyter-pip'],
 )
